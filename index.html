@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Orbitales Moleculares</title>
+    <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+</head>
+<body>
+    <h2>Visor de Orbitales Moleculares con JSmol</h2>
+    <label for="orbitalSelect">Selecciona un orbital molecular:</label>
+    <select id="orbitalSelect" onchange="cargarOrbital()">
+        <option value="agua.mol">Molécula sin orbitales</option>
+        <option value="AGUA2_mo2.cub">Orbital 1</option>
+        <option value="AGUA2_mo3.cub">Orbital 2</option>
+        <option value="AGUA2_mo4.cub">Orbital 3</option>
+        <option value="AGUA2_mo5.cub">Orbital 4</option>
+        <option value="AGUA2_mo6.cub">Orbital 5</option>
+    </select>
+    
+    <div id="jsmol" style="width: 500px; height: 500px;"></div>
+    
+    <script>
+        var Info = {
+            width: 500,
+            height: 500,
+            j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
+            use: "HTML5",
+        };
+        var jmolApp = Jmol.getApplet("jsmol", Info);
+        
+        function cargarOrbital() {
+            var selectedFile = document.getElementById("orbitalSelect").value;
+            Jmol.script(jmolApp, "load '" + selectedFile + "'");
+        }
+    </script>
+</body>
+</html>
