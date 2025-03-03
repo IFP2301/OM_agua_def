@@ -26,8 +26,8 @@
         if (selectedFile.endsWith(".cub")) {
             Jmol.script(jmolApp, `
                 isosurface delete;
-                isosurface pos "${selectedFile}" color red translucent 0.5 cutoff 0.02;
-                isosurface neg "${selectedFile}" color blue translucent 0.5 cutoff -0.02;
+                isosurface pos "${selectedFile}" color red translucent 0.5 cutoff 0.01;
+                isosurface neg "${selectedFile}" color blue translucent 0.5 cutoff -0.01;
             `);
         } else {
             Jmol.script(jmolApp, "load '" + selectedFile + "'");
