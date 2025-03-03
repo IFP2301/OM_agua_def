@@ -11,33 +11,28 @@
     <label for="orbitalSelect">Selecciona un orbital molecular:</label>
     <select id="orbitalSelect" onchange="cargarOrbital()">
         <option value="agua.mol">Molécula sin orbitales</option>
-        <option value="agua3_mo1.cub">Orbital 1</option>
-        <option value="agua3_mo2.cub">Orbital 2</option>
-        <option value="agua3_mo3.cub">Orbital 3</option>
-        <option value="agua3_mo4.cub">Orbital 4</option>
-        <option value="agua3_mo5.cub">Orbital 5</option>
-        <option value="agua3_mo6.cub">Orbital 6</option>        
+        <option value="AGUA2_mo2.cub">Orbital 1</option>
+        <option value="AGUA2_mo3.cub">Orbital 2</option>
+        <option value="AGUA2_mo4.cub">Orbital 3</option>
+        <option value="AGUA2_mo5.cub">Orbital 4</option>
+        <option value="AGUA2_mo6.cub">Orbital 5</option>
     </select>
     
     <div id="jsmol" style="width: 500px; height: 500px;"></div>
     
     <script>
-        var Info = {
-            width: 500,
-            height: 500,
-            j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-            use: "HTML5",
-        };
-        var jmolApp = Jmol.getApplet("jsmol", Info);
-        
-        function cargarOrbital() {
-    var selectedFile = document.getElementById("orbitalSelect").value;
-    if (selectedFile.endsWith(".cub")) {
-        Jmol.script(jmolApp, "isosurface delete; isosurface positive yellow; isosurface negative blue; isosurface 0.02 '" + selectedFile + "'");
-    } else {
-        Jmol.script(jmolApp, "load '" + selectedFile + "'");
+         function cargarOrbital() {
+        var selectedFile = document.getElementById("orbitalSelect").value;
+        if (selectedFile.endsWith(".cub")) {
+            Jmol.script(jmolApp, `
+                isosurface delete;
+                isosurface pos "${selectedFile}" color yellow translucent 0.5 cutoff 0.02;
+                isosurface neg "${selectedFile}" color blue translucent 0.5 cutoff -0.02;
+            `);
+        } else {
+            Jmol.script(jmolApp, "load '" + selectedFile + "'");
+        }
     }
-}
     </script>
 </body>
 </html>
