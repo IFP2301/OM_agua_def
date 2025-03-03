@@ -5,38 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visor de Orbitales Moleculares</title>
     <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        h2 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px;
+            border-radius: 5px;
+        }
+        #jsmol {
+            width: 500px;
+            height: 500px;
+            border: 1px solid #ccc;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <h2>Visor de Orbitales Moleculares con JSmol</h2>
-    <label for="orbitalSelect">Selecciona un orbital molecular:</label>
-    <select id="orbitalSelect" onchange="cargarOrbital()">
-        <option value="agua.mol">Molécula sin orbitales</option>
-        <option value="AGUA2_mo2.cub">Orbital 1</option>
-        <option value="AGUA2_mo3.cub">Orbital 2</option>
-        <option value="AGUA2_mo4.cub">Orbital 3</option>
-        <option value="AGUA2_mo5.cub">Orbital 4</option>
-        <option value="AGUA2_mo6.cub">Orbital 5</option>
-    </select>
-    
-    <div id="jsmol" style="width: 500px; height: 500px;"></div>
+    <div class="container">
+        <h2>Visor de Orbitales Moleculares con JSmol</h2>
+        <label for="orbitalSelect">Selecciona un orbital molecular:</label>
+        <select id="orbitalSelect" onchange="cargarOrbital()">
+            <option value="agua.mol">Molécula sin orbitales</option>
+            <option value="agua3_mo1.cub">Orbital 1</option>
+            <option value="agua3_mo2.cub">Orbital 2</option>
+            <option value="agua3_mo3.cub">Orbital 3</option>
+            <option value="agua3_mo4.cub">Orbital 4</option>
+            <option value="agua3_mo5.cub">Orbital 5</option>
+            <option value="agua3_mo6.cub">Orbital 6</option>
+        </select>
+        <div id="jsmol"></div>
+    </div>
     
     <script>
-    function cargarOrbital() {
-        var selectedFile = document.getElementById("orbitalSelect").value;
-        if (selectedFile.endsWith(".cub")) {
-            // Carga el archivo .cub y muestra las isosuperficies positivas y negativas
-            Jmol.script(jmolApp, `
-                isosurface delete;
-                load "${selectedFile}";
-                isosurface pos yellow translucent 0.5 cutoff 0.02;
-                isosurface neg blue translucent 0.5 cutoff -0.02;
-                display isosurface;
-            `);
-        } else if (selectedFile.endsWith(".mol")) {
-            // Carga la molécula .mol sin isosuperficies
-            Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface delete;");
+        var Info = {
+            width: 500,
+            height: 500,
+            j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
+            use: "HTML5",
+            script: "load 'agua.mol';"
+        };
+        var jmolApp = Jmol.getApplet("jsmol", Info);
+        
+        function cargarOrbital() {
+            var selectedFile = document.getElementById("orbitalSelect").value;
+            if (selectedFile.endsWith(".cub")) {
+                Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface molecular" );
+            } else {
+                Jmol.script(jmolApp, "load '" + selectedFile + "'");
+            }
         }
-    }
     </script>
 </body>
 </html>
