@@ -21,16 +21,20 @@
     <div id="jsmol" style="width: 500px; height: 500px;"></div>
     
     <script>
-         function cargarOrbital() {
+    function cargarOrbital() {
         var selectedFile = document.getElementById("orbitalSelect").value;
         if (selectedFile.endsWith(".cub")) {
+            // Carga el archivo .cub y muestra las isosuperficies positivas y negativas
             Jmol.script(jmolApp, `
                 isosurface delete;
-                isosurface pos "${selectedFile}" color red translucent 0.5 cutoff 0.01;
-                isosurface neg "${selectedFile}" color blue translucent 0.5 cutoff -0.01;
+                load "${selectedFile}";
+                isosurface pos yellow translucent 0.5 cutoff 0.02;
+                isosurface neg blue translucent 0.5 cutoff -0.02;
+                display isosurface;
             `);
-        } else {
-            Jmol.script(jmolApp, "load '" + selectedFile + "'");
+        } else if (selectedFile.endsWith(".mol")) {
+            // Carga la molécula .mol sin isosuperficies
+            Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface delete;");
         }
     }
     </script>
