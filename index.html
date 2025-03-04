@@ -55,9 +55,8 @@
             <option value="orbital4.cub">Orbital 4</option>
             <option value="orbital5.cub">Orbital 5</option>
         </select>
-       <div id="jsmol" style="width: 500px; height: 500px; border: 1px solid #ccc; background-color: white; padding: 10px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);">
-    <!-- El visor JSmol se cargará aquí automáticamente -->
-</div>
+        <div id="jsmol"></div>
+    </div>
     
     <script>
         var Info = {
@@ -67,14 +66,14 @@
             use: "HTML5",
             script: "load 'agua.mol';"
         };
-        var jmolApp = Jmol.getApplet("jsmol", Info, "jsmol");
+        var jmolApp = Jmol.getApplet("jsmol", Info);
         
         function cargarOrbital() {
             var selectedFile = document.getElementById("orbitalSelect").value;
             if (selectedFile.endsWith(".cub")) {
-                Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface molecular" );
+                Jmol.script(jmolApp, "isosurface delete; load '" + selectedFile + "'; isosurface 0.02 translucent yellow; isosurface -0.02 translucent blue; display isosurface;");
             } else {
-                Jmol.script(jmolApp, "load '" + selectedFile + "'");
+                Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface delete;");
             }
         }
     </script>
