@@ -55,8 +55,9 @@
             <option value="orbital4.cub">Orbital 4</option>
             <option value="orbital5.cub">Orbital 5</option>
         </select>
-        <div id="jsmol"></div>
-    </div>
+       <div id="jsmol" style="width: 500px; height: 500px; border: 1px solid #ccc; background-color: white; padding: 10px; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);">
+    <!-- El visor JSmol se cargará aquí automáticamente -->
+</div>
     
     <script>
         var Info = {
@@ -66,7 +67,7 @@
             use: "HTML5",
             script: "load 'agua.mol';"
         };
-        var jmolApp = Jmol.getApplet("jsmol", Info);
+        var jmolApp = Jmol.getApplet("jsmol", Info, "jsmol");
         
         function cargarOrbital() {
             var selectedFile = document.getElementById("orbitalSelect").value;
