@@ -1,82 +1,54 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visor de Orbitales Moleculares</title>
-    <script type="text/javascript" src="https://chemapps.stolaf.edu/jmol/jsmol/JSmol.min.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        h2 {
-            color: #333;
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-        }
-        select {
-            padding: 10px;
-            font-size: 16px;
-            margin: 10px;
-            border-radius: 5px;
-        }
-        #jsmol {
-            width: 500px;
-            height: 500px;
-            border: 1px solid #ccc;
-            background-color: white;
-            padding: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+  <meta charset="utf-8">
+  <title>Visualización de Orbitales Moleculares del Agua</title>
+  <!-- Incluir la librería JSmol (asegúrate de actualizar la ruta o usar un CDN si lo prefieres) -->
+  <script type="text/javascript" src="js/JSmol.min.js"></script>
+  <script type="text/javascript">
+    // Configuración del visor JSmol
+    var Info = {
+      width: 600,
+      height: 600,
+      debug: false,
+      color: "0xFFFFFF",
+      use: "HTML5", // Se usa HTML5, lo que evita depender de Java
+      j2sPath: "jsmol/j2s", // Actualiza esta ruta según la ubicación en tu repositorio
+      script: "set backgroundColor white;" // Script inicial
+    };
+
+    // Variable que contendrá el visor
+    var jmolApplet = null;
+
+    // Inicializar el visor una vez cargada la página
+    window.onload = function(){
+      jmolApplet = Jmol.getApplet("jmolApplet0", Info);
+    };
+
+    // Función para cargar un archivo de modelo
+    function cargarArchivo(fileUrl) {
+      var scriptCarga = "load " + fileUrl;
+      Jmol.script(jmolApplet, scriptCarga);
+    }
+  </script>
 </head>
 <body>
-    <div class="container">
-        <h2>Visor de Orbitales Moleculares con JSmol</h2>
-        <label for="orbitalSelect">Selecciona un orbital molecular:</label>
-        <select id="orbitalSelect" onchange="cargarOrbital()">
-            <option value="agua.mol">Molécula sin orbitales</option>
-            <option value="agua3_mo1.cub">Orbital 1</option>
-            <option value="agua3_mo2.cub">Orbital 2</option>
-            <option value="agua3_mo3.cub">Orbital 3</option>
-            <option value="agua3_mo4.cub">Orbital 4</option>
-            <option value="agua3_mo5.cub">Orbital 5</option>
-            <option value="agua3_mo6.cub">Orbital 5</option>
-        </select>
-        <div id="jsmol"></div>
-    </div>
-    
-    <script>
-        var Info = {
-            width: 500,
-            height: 500,
-            j2sPath: "https://chemapps.stolaf.edu/jmol/jsmol/j2s",
-            use: "HTML5",
-            script: "load 'agua.mol';"
-        };
-        var jmolApp = Jmol.getApplet("jsmol", Info);
-        
-        function cargarOrbital() {
-            var selectedFile = document.getElementById("orbitalSelect").value;
-            if (selectedFile.endsWith(".cub")) {
-                Jmol.script(jmolApp, "isosurface delete; load '" + selectedFile + "'; isosurface 0.02 translucent yellow; isosurface -0.02 translucent blue; display isosurface;");
-            } else {
-                Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface delete;");
-            }
-        }
-    </script>
+  <h1>Orbitales Moleculares del Agua</h1>
+  
+  <!-- Contenedor para el visor de JSmol -->
+  <div id="jmolApplet0" style="width:600px; height:600px; border: 1px solid #000;"></div>
+  
+  <!-- Menú desplegable para seleccionar el archivo a visualizar -->
+  <p>
+    <select onchange="if(this.value !== '') { cargarArchivo(this.value); }">
+      <option value="">Selecciona un orbital</option>
+      <!-- Reemplaza las URLs con los enlaces raw de tu repositorio en GitHub -->
+      <option value="https://raw.githubusercontent.com/usuario/repositorio/rama/ruta_al_archivo/agua.mol">Mol del agua</option>
+      <option value="https://raw.githubusercontent.com/usuario/repositorio/rama/ruta_al_archivo/orbital1.cub">Orbital 1</option>
+      <option value="https://raw.githubusercontent.com/usuario/repositorio/rama/ruta_al_archivo/orbital2.cub">Orbital 2</option>
+      <!-- Agrega más opciones según necesites -->
+    </select>
+  </p>
+  
 </body>
 </html>
