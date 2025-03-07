@@ -70,7 +70,7 @@
         function cargarOrbital() {
             var selectedFile = document.getElementById("orbitalSelect").value;
             if (selectedFile.endsWith(".cub")) {
-                Jmol.script(jmolApp, "isosurface delete; load '" + selectedFile + "'; isosurface 0.01 translucent yellow; isosurface -0.01 translucent blue; display isosurface;");
+                Jmol.script(jmolApp, "isosurface delete; load '" + selectedFile + "'; isosurface pos yellow translucent 0.5 cutoff 0.02; isosurface neg blue translucent 0.5 cutoff -0.02; display isosurface;");
             } else {
                 Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface delete;");
             }
