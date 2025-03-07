@@ -68,13 +68,19 @@
         var jmolApp = Jmol.getApplet("jsmol", Info);
         
         function cargarOrbital() {
-            var selectedFile = document.getElementById("orbitalSelect").value;
-            if (selectedFile.endsWith(".cub")) {
-                Jmol.script(jmolApp, "isosurface delete; load '" + selectedFile + "'; isosurface pos yellow translucent 0.5 cutoff 0.02; isosurface neg blue translucent 0.5 cutoff -0.02; display isosurface;");
-            } else {
-                Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface delete;");
-            }
-        }
+    var selectedFile = document.getElementById("orbitalSelect").value;
+    if (selectedFile.endsWith(".cub")) {
+        Jmol.script(jmolApp, `
+            load '${selectedFile}';
+            isosurface delete;
+            isosurface pos yellow translucent 0.5 cutoff 0.02;
+            isosurface neg blue translucent 0.5 cutoff -0.02;
+            display isosurface;
+        `);
+    } else {
+        Jmol.script(jmolApp, "load '" + selectedFile + "'; isosurface delete;");
+    }
+}
     </script>
 </body>
 </html>
